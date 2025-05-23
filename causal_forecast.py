@@ -1046,8 +1046,6 @@ def apply_scaling_or_fix_ols(config, CONFIG_PATH):
 
     with st.expander("ℹ️ Instructions"):
         st.markdown("""
-        - **Hyperparameter Tuning:**  
-        When enabled, the app will automatically search for the best hyperparameters for selected models using techniques like cross-validation and grid search. This may improve accuracy but can increase computation time.
 
         - **Scaling:**  
         When enabled, this option applies feature scaling (e.g., standardization) to the causal variables to improve model performance and convergence.
@@ -1056,7 +1054,7 @@ def apply_scaling_or_fix_ols(config, CONFIG_PATH):
         If selected, the app will automatically fix violations of linear regression assumptions if violations are present.  
         """)
 
-    config["tune_hyperparams"] = st.checkbox("Hyperparameter Tuning", value=config.get("tune_hyperparams", True))
+    # config["tune_hyperparams"] = st.checkbox("Hyperparameter Tuning", value=config.get("tune_hyperparams", True))
     config["scale_features"] = st.checkbox("Scale Features", value=config.get("scale_features", True))
     config["fix_ols_violations"] = st.checkbox("Fix OLS Violations", value=config.get("fix_ols_violations", True))
     save_config(config,CONFIG_PATH)
