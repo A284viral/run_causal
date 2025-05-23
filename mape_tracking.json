@@ -1,0 +1,272 @@
+{
+    "AEON,ORAL,CLOSEUP,TOOTHBRUSH": {
+        "mape": 18.766275379846793,
+        "config": {
+            "reset_config": false,
+            "data_path": "uploaded_files/generating_final_data.csv",
+            "required_columns": [
+                "yearmonth",
+                "banner",
+                "category",
+                "brand",
+                "segment",
+                "pri_sales_tons",
+                "packgroup",
+                "sec_sales_tons",
+                "dp_name_under_invest_promotion",
+                "invest_sum_promotion",
+                "duration_invest_mean_promotion",
+                "dp_name_under_invest_media",
+                "invest_sum_media",
+                "duration_invest_mean_media",
+                "promo_in_month",
+                "media_in_month",
+                "pri_sales_tons_MA",
+                "history_correction",
+                "outlier_corrected_data",
+                "Insample Forecast",
+                "Actual Sales(Corrected)",
+                "no_of_working_days",
+                "massive",
+                "ocd",
+                "ps_v2",
+                "ps_v3",
+                "packgroup_tdp",
+                "visibility",
+                "Error_reg"
+            ],
+            "grouping_columns": [
+                "banner",
+                "category",
+                "brand",
+                "segment"
+            ],
+            "grouping_columns_done": true,
+            "causal_features": [
+                "promo_in_month",
+                "media_in_month",
+                "no_of_working_days",
+                "packgroup_tdp",
+                "visibility"
+            ],
+            "causal_features_done": true,
+            "monthly_seasonality": 0,
+            "quarterly_seasonality": 0,
+            "date_column": "yearmonth",
+            "date_format": "%Y%m",
+            "baseline_forecast_check": true,
+            "original_target_column": "outlier_corrected_data",
+            "earlier_forecast_columns": "Insample Forecast",
+            "target_column": "Error_reg",
+            "models": [
+                "CatBoost"
+            ],
+            "tune_hyperparams": true,
+            "scale_features": true,
+            "fix_ols_violations": true,
+            "drop_zero_rows_and_get_active_columns": true,
+            "excluded_columns_from_drop_zero_list": [
+                "no_of_working_days"
+            ],
+            "outlier_correction": false,
+            "enable_lag_feature": true,
+            "no_of_lags": 3,
+            "columns_with_lag_features": [
+                "promo_in_month"
+            ],
+            "split_by_percentage": true,
+            "training_data_percent": 0.8,
+            "testing_data_percent": 0.19999999999999996,
+            "test_start_date": "2024-01-01",
+            "selected_date_index": 36,
+            "simulated_causal_factors": [],
+            "change_percent": {},
+            "filter_granularity": [
+                "AEON",
+                "ORAL",
+                "CLOSEUP",
+                "TOOTHBRUSH"
+            ]
+        }
+    },
+    "AEON,ORAL,CLOSEUP,TOOTHPASTE": {
+        "mape": 12.472002976684212,
+        "config": {
+            "reset_config": false,
+            "data_path": "uploaded_files/generating_final_data.csv",
+            "required_columns": [
+                "yearmonth",
+                "banner",
+                "category",
+                "brand",
+                "segment",
+                "pri_sales_tons",
+                "packgroup",
+                "sec_sales_tons",
+                "dp_name_under_invest_promotion",
+                "invest_sum_promotion",
+                "duration_invest_mean_promotion",
+                "dp_name_under_invest_media",
+                "invest_sum_media",
+                "duration_invest_mean_media",
+                "promo_in_month",
+                "media_in_month",
+                "pri_sales_tons_MA",
+                "history_correction",
+                "outlier_corrected_data",
+                "Insample Forecast",
+                "Actual Sales(Corrected)",
+                "no_of_working_days",
+                "massive",
+                "ocd",
+                "ps_v2",
+                "ps_v3",
+                "packgroup_tdp",
+                "visibility",
+                "Error_reg"
+            ],
+            "grouping_columns": [
+                "banner",
+                "category",
+                "brand",
+                "segment"
+            ],
+            "grouping_columns_done": true,
+            "causal_features": [
+                "promo_in_month",
+                "media_in_month",
+                "no_of_working_days",
+                "packgroup_tdp",
+                "visibility"
+            ],
+            "causal_features_done": true,
+            "monthly_seasonality": 0,
+            "quarterly_seasonality": 0,
+            "date_column": "yearmonth",
+            "date_format": "%Y%m",
+            "baseline_forecast_check": true,
+            "original_target_column": "outlier_corrected_data",
+            "earlier_forecast_columns": "Insample Forecast",
+            "target_column": "Error_reg",
+            "models": [
+                "CatBoost"
+            ],
+            "tune_hyperparams": true,
+            "scale_features": true,
+            "fix_ols_violations": true,
+            "drop_zero_rows_and_get_active_columns": true,
+            "excluded_columns_from_drop_zero_list": [
+                "no_of_working_days"
+            ],
+            "outlier_correction": false,
+            "enable_lag_feature": true,
+            "no_of_lags": 3,
+            "columns_with_lag_features": [
+                "promo_in_month"
+            ],
+            "split_by_percentage": true,
+            "training_data_percent": 0.8,
+            "testing_data_percent": 0.19999999999999996,
+            "test_start_date": "2024-01-01",
+            "selected_date_index": 36,
+            "simulated_causal_factors": [],
+            "change_percent": {},
+            "filter_granularity": [
+                "AEON",
+                "ORAL",
+                "CLOSEUP",
+                "TOOTHPASTE"
+            ]
+        }
+    },
+    "AEON,SKINCLEANSING,DOVE,DOVE GEL": {
+        "mape": 27.680543084232077,
+        "config": {
+            "reset_config": false,
+            "data_path": "uploaded_files/generating_final_data.csv",
+            "required_columns": [
+                "yearmonth",
+                "banner",
+                "category",
+                "brand",
+                "segment",
+                "pri_sales_tons",
+                "packgroup",
+                "sec_sales_tons",
+                "dp_name_under_invest_promotion",
+                "invest_sum_promotion",
+                "duration_invest_mean_promotion",
+                "dp_name_under_invest_media",
+                "invest_sum_media",
+                "duration_invest_mean_media",
+                "promo_in_month",
+                "media_in_month",
+                "pri_sales_tons_MA",
+                "history_correction",
+                "outlier_corrected_data",
+                "Insample Forecast",
+                "Actual Sales(Corrected)",
+                "no_of_working_days",
+                "massive",
+                "ocd",
+                "ps_v2",
+                "ps_v3",
+                "packgroup_tdp",
+                "visibility",
+                "Error_reg"
+            ],
+            "grouping_columns": [
+                "banner",
+                "category",
+                "brand",
+                "segment"
+            ],
+            "grouping_columns_done": true,
+            "causal_features": [
+                "promo_in_month",
+                "media_in_month",
+                "no_of_working_days",
+                "packgroup_tdp",
+                "visibility"
+            ],
+            "causal_features_done": true,
+            "monthly_seasonality": 0,
+            "quarterly_seasonality": 0,
+            "date_column": "yearmonth",
+            "date_format": "%Y%m",
+            "baseline_forecast_check": true,
+            "original_target_column": "outlier_corrected_data",
+            "earlier_forecast_columns": "Insample Forecast",
+            "target_column": "Error_reg",
+            "models": [
+                "CatBoost"
+            ],
+            "tune_hyperparams": true,
+            "scale_features": true,
+            "fix_ols_violations": true,
+            "drop_zero_rows_and_get_active_columns": true,
+            "excluded_columns_from_drop_zero_list": [
+                "no_of_working_days"
+            ],
+            "outlier_correction": false,
+            "enable_lag_feature": true,
+            "no_of_lags": 3,
+            "columns_with_lag_features": [
+                "promo_in_month"
+            ],
+            "split_by_percentage": true,
+            "training_data_percent": 0.8,
+            "testing_data_percent": 0.19999999999999996,
+            "test_start_date": "2024-01-01",
+            "selected_date_index": 36,
+            "simulated_causal_factors": [],
+            "change_percent": {},
+            "filter_granularity": [
+                "AEON",
+                "SKINCLEANSING",
+                "DOVE",
+                "DOVE GEL"
+            ]
+        }
+    }
+}

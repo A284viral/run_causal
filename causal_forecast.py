@@ -119,164 +119,6 @@ def interpret_shap(row):
     else:
         return "Little Impact"
 
-
-# def get_model_outputs(X_train, y_train, X_test, models_to_run=None):
-#     results = {}
-
-
-#     def ols_model(X, y, X_eval, tune_hyperparams):
-#         X_const = sm.add_constant(X)
-#         model = sm.OLS(y, X_const).fit()
-#         X_eval_const = sm.add_constant(X_eval)
-#         y_pred = model.predict(X_eval_const)
-#         p_values = model.pvalues[1:]  # exclude intercept
-#         significant_vars = list(p_values[p_values < 0.05].index)
-#         coeffs = model.params
-#         equation = " + ".join([f"{coeffs[i]:.4f}*{i}" for i in coeffs.index if i != 'const'])
-#         equation = f"{coeffs['const']:.4f} + {equation}" if 'const' in coeffs else equation
-#         return y_pred, significant_vars, equation
-
-#     def lasso_model(X, y, X_eval, tune_hyperparams):
-#         model = LassoCV(cv=5).fit(X, y)
-#         y_pred = model.predict(X_eval)
-#         coefs = pd.Series(model.coef_, index=X.columns)
-#         significant_vars = list(coefs[coefs != 0].index)
-#         equation = " + ".join([f"{coefs[i]:.4f}*{i}" for i in significant_vars])
-#         if model.intercept_ != 0:
-#             equation = f"{model.intercept_:.4f} + {equation}"
-#         return y_pred, significant_vars, equation
-
-#     def elastic_net_model(X, y, X_eval, tune_hyperparams):
-#         model = ElasticNetCV(cv=5).fit(X, y)
-#         y_pred = model.predict(X_eval)
-#         coefs = pd.Series(model.coef_, index=X.columns)
-#         significant_vars = list(coefs[coefs != 0].index)
-#         equation = " + ".join([f"{coefs[i]:.4f}*{i}" for i in significant_vars])
-#         if model.intercept_ != 0:
-#             equation = f"{model.intercept_:.4f} + {equation}"
-#         return y_pred, significant_vars, equation
-
-#     def xgb_model(X, y, X_eval, tune_hyperparams):
-#         model = XGBRegressor(n_estimators=100, random_state=42)
-#         model.fit(X, y)
-#         y_pred = model.predict(X_eval)
-#         return y_pred, None, None
-
-#     def rf_model(X, y, X_eval, tune_hyperparams):
-#         model = RandomForestRegressor(n_estimators=100, random_state=42)
-#         model.fit(X, y)
-#         y_pred = model.predict(X_eval)
-#         return y_pred, None, None
-
-#     def dt_model(X, y, X_eval, tune_hyperparams):
-#         model = DecisionTreeRegressor(random_state=42)
-#         model.fit(X, y)
-#         y_pred = model.predict(X_eval)
-#         return y_pred, None, None
-
-#     def svr_model(X, y, X_eval, tune_hyperparams):
-#         model = SVR()
-#         model.fit(X, y)
-#         y_pred = model.predict(X_eval)
-#         return y_pred, None, None
-
-#     def mlp_model(X, y, X_eval, tune_hyperparams):
-#         model = MLPRegressor(hidden_layer_sizes=(64, 32), max_iter=500, random_state=42)
-#         model.fit(X, y)
-#         y_pred = model.predict(X_eval)
-#         return y_pred, None, None
-
-
-
-
-#     def catboost_model(X_train, y_train, X_test):
-#         model = CatBoostRegressor(verbose=0)
-#         model.fit(X_train, y_train)
-
-#         # Extracting Significant Features
-#         feature_importance = model.get_feature_importance()
-#         columns = X_train.columns
-#         sig_vars = sorted(zip(columns, feature_importance), key=lambda x: x[1], reverse=True)
-
-
-#         # Extracting Dependency on target variable
-#         explainer = shap.TreeExplainer(model)
-#         shap_array = explainer.shap_values(X_train)
-        
-#         # Mean absolute and directional SHAP values
-#         mean_abs_shap = np.abs(shap_array).mean(axis=0)
-#         mean_shap = shap_array.mean(axis=0)
-        
-#         # Combine into a DataFrame
-#         shap_df = pd.DataFrame({
-#             'Feature': X_train.columns,
-#             'SHAP_Mean_Abs': mean_abs_shap,
-#             'SHAP_Mean': mean_shap
-#         })
-        
-#         # Sort and interpret
-#         shap_df = shap_df.sort_values(by='SHAP_Mean_Abs', ascending=False)
-#         shap_df['Interpretation'] = shap_df.apply(interpret_shap, axis=1)
-#         shap_df = shap_df[shap_df['SHAP_Mean_Abs'] != 0]
-        
-#         # ✅ Convert to dictionary
-#         interpretation_dict = dict(zip(shap_df['Feature'], shap_df['Interpretation']))
-
-
-         
-#         return model.predict(X_test), sig_vars, interpretation_dict
-
-
-
-#     def stacking_model(X_train, y_train, X_test):
-#         base_models = [
-#             ('rf', RandomForestRegressor(n_estimators=50, random_state=42)),
-#             ('lasso', LassoCV(cv=5))
-#         ]
-#         final_estimator = LinearRegression()
-#         model = StackingRegressor(estimators=base_models, final_estimator=final_estimator)
-#         model.fit(X_train, y_train)
-#         return model.predict(X_test), None, None
-
-
-
-
-    
-#     model_dict = {
-#         "OLS": ols_model,
-#         "Lasso": lasso_model,
-#         "ElasticNet": elastic_net_model,
-#         "XGBoost": xgb_model,
-#         "RandomForest": rf_model,
-#         "DecisionTree": dt_model,
-#         "SVR": svr_model,
-#         "MLPRegressor": mlp_model,
-#         "CatBoost": catboost_model,
-#         "Stacking": stacking_model,
-#     }
-
-#     # Filter if user passed model list
-#     if models_to_run:
-#         model_dict = {k: v for k, v in model_dict.items() if k in models_to_run}
-
-#     for name, model_fn in model_dict.items():
-#         try:
-#             y_pred, significant_vars, equation = model_fn(X_train, y_train, X_test)
-#             results[name] = {
-#                 'y_pred': y_pred,
-#                 'significant_vars': significant_vars,
-#                 'equation': equation
-#             }
-#         except Exception as e:
-#             results[name] = {
-#                 'y_pred': None,
-#                 'significant_vars': None,
-#                 'equation': None,
-#                 'error': str(e)
-#             }
-
-#     return results
-
 def get_model_outputs(X_train, y_train, X_test, models_to_run=None, tune_hyperparams=False):
     results = {}
 
@@ -841,23 +683,38 @@ def draw_graph(df1,final_forecast_var, config, simulate_change, selected_causal 
         # st.pyplot(plt.gcf())
         return plt
     
-
+# Load once into session state
 def load_config(path):
-    """Load config if exists, else create a new one."""
-    if os.path.exists(path):
-        with open(path, "r") as f:
-            return json.load(f)
-    else:
-        default_config = {}  # You can prefill with defaults if desired
-        with open(path, "w") as f:
-            json.dump(default_config, f, indent=4)
-        return default_config
+    if 'config' not in st.session_state:
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                st.session_state.config = json.load(f)
+        else:
+            st.session_state.config = {}  # default config
+            with open(path, "w") as f:
+                json.dump(st.session_state.config, f, indent=4)
+
+# Save session config to disk (optional)
+def save_config(config, path):
+    with open(path, "w") as f:
+        json.dump(st.session_state.config, f, indent=4)
+
+# def load_config(path):
+#     """Load config if exists, else create a new one."""
+#     if os.path.exists(path):
+#         with open(path, "r") as f:
+#             return json.load(f)
+#     else:
+#         default_config = {}  # You can prefill with defaults if desired
+#         with open(path, "w") as f:
+#             json.dump(default_config, f, indent=4)
+#         return default_config
 
 
-# Save updated config to the JSON file
-def save_config(config,CONFIG_PATH):
-    with open(CONFIG_PATH, "w") as f:
-        json.dump(config, f, indent=4)
+# # Save updated config to the JSON file
+# def save_config(config,CONFIG_PATH):
+#     with open(CONFIG_PATH, "w") as f:
+#         json.dump(config, f, indent=4)
 
 def generating_key(values):
     return ",".join(values)
