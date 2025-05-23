@@ -769,17 +769,18 @@ def upload_data_file(config, CONFIG_PATH):
         save_config(config, CONFIG_PATH)
 
         return df, config
+    
+    try:
+        default_path = config.get("data_path", "generating_final_data.csv")
 
-    default_path = config.get("data_path", "generating_final_data.csv")
-
-    if os.path.exists(default_path):
-        st.info(f"No file uploaded. Using default: `{default_path}`")
-        df = pd.read_csv(default_path)
-        return df, config
-    else:
+        if os.path.exists(default_path):
+            st.info(f"No file uploaded. Using default: `{default_path}`")
+            df = pd.read_csv(default_path)
+            return df, config
+            
+    except:
         st.warning("⚠️ No file uploaded and no default dataset found. Please upload a file to proceed.")
         st.stop()
-
 
 def get_required_columns(config, original_data, CONFIG_PATH):
     # st.subheader("🧾 Required Columns")
