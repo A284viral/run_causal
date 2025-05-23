@@ -1053,7 +1053,7 @@ def apply_scaling_or_fix_ols(config, CONFIG_PATH):
         - **Fix OLS Assumptions:**  
         If selected, the app will automatically fix violations of linear regression assumptions if violations are present.  
         """)
-
+    config["tune_hyperparams"] = False
     # config["tune_hyperparams"] = st.checkbox("Hyperparameter Tuning", value=config.get("tune_hyperparams", True))
     config["scale_features"] = st.checkbox("Scale Features", value=config.get("scale_features", True))
     config["fix_ols_violations"] = st.checkbox("Fix OLS Violations", value=config.get("fix_ols_violations", True))
