@@ -22,6 +22,7 @@ from sklearn.svm import SVR
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
 
 # Statsmodels & SciPy
 import statsmodels.api as sm
@@ -150,9 +151,12 @@ def get_model_outputs(X_train, y_train, X_test, models_to_run=None, tune_hyperpa
         equation = f"{model.intercept_:.4f} + " + " + ".join([f"{coefs[i]:.4f}*{i}" for i in significant_vars])
         return y_pred, significant_vars, equation
 
+
     def xgb_model(X, y, X_eval, tune_hyperparams):
+        """
+        Train an XGBoost model (optionally with hyperparameter tuning) and return predictions and top features.
+        """
         if tune_hyperparams:
-            from sklearn.model_selection import GridSearchCV
             param_grid = {
                 'n_estimators': [50, 100],
                 'max_depth': [3, 5],
@@ -166,13 +170,19 @@ def get_model_outputs(X_train, y_train, X_test, models_to_run=None, tune_hyperpa
             model.fit(X, y)
 
         y_pred = model.predict(X_eval)
-        importances = model.feature_importances_
-        important_vars = list(pd.Series(importances, index=X.columns).sort_values(ascending=False).head(5).index)
+
+        # Safely get top 5 features
+        if hasattr(model, 'feature_importances_'):
+            importances = model.feature_importances_
+            important_vars = list(pd.Series(importances, index=X.columns).sort_values(ascending=False).head(5).index)
+        else:
+            important_vars = []
+
         return y_pred, important_vars, None
+
 
     def rf_model(X, y, X_eval, tune_hyperparams):
         if tune_hyperparams:
-            from sklearn.model_selection import GridSearchCV
             param_grid = {'n_estimators': [50, 100], 'max_depth': [None, 5]}
             model = GridSearchCV(RandomForestRegressor(random_state=42), param_grid, cv=3)
             model.fit(X, y)
