@@ -171,12 +171,8 @@ def get_model_outputs(X_train, y_train, X_test, models_to_run=None, tune_hyperpa
 
         y_pred = model.predict(X_eval)
 
-        # Safely get top 5 features
-        if hasattr(model, 'feature_importances_'):
-            importances = model.feature_importances_
-            important_vars = list(pd.Series(importances, index=X.columns).sort_values(ascending=False).head(5).index)
-        else:
-            important_vars = []
+
+        important_vars = []
 
         return y_pred, important_vars, None
 
